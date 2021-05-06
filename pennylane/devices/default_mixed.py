@@ -76,6 +76,8 @@ class DefaultMixed(QubitDevice):
         "CZ",
         "PhaseShift",
         "ControlledPhaseShift",
+        "GeneralGate",
+        "CGeneralGate",
         "RX",
         "RY",
         "RZ",

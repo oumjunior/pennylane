@@ -61,6 +61,23 @@ def ControlledPhaseShift(phi):
     """
     return jnp.array([1.0, 1.0, 1.0, jnp.exp(1j * phi)])
 
+def GeneralGate(alpha, beta, gamma, phi):
+    c = jnp.cos(alpha)
+    s = jnp.sin(alpha)
+    e_ib = jnp.exp(1j*beta)
+    e_ig = jnp.exp(1j*alpha)
+    e_ip = jnp.exp(1j*phi)
+
+    return e_ip*jnp.array([[e_ib*c, e_ig*s], [-1/e_ig*s, 1/e_ib*c]])
+
+def CGeneralGate(alpha, beta, gamma, phi):
+    c = jnp.cos(alpha)
+    s = jnp.sin(alpha)
+    e_ib = jnp.exp(1j*beta)
+    e_ig = jnp.exp(1j*alpha)
+    e_ip = jnp.exp(1j*phi)
+
+    return jnp.array([[1, 0, 0, 0], [0, 1, 0, 0], [0, 0, e_ip*e_ib*c, e_ip*e_ig*s], [0, 0, -1/e_ig*e_ip*s, 1/e_ib*e_ip*c]])
 
 def RX(theta):
     r"""One-qubit rotation about the x axis.

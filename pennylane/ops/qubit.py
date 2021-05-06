@@ -631,6 +631,94 @@ class Toffoli(Operation):
     def adjoint(self):
         return Toffoli(wires=self.wires)
 
+class GeneralGate(Operation):
+    r""" GeneralGate(alpha, beta, gamma, phi, wires)
+    Single-qubit fully parametrized gate
+
+    .. math:: G(\alpha, \beta, \gamma, \phi) = e^{\phi} \begin{bmatrix}
+                \e^{i\beta}cos(\alpha) & e^{i\gamma}sin(\alpha) \\
+                -e^{-i\gamma}sin(\alpha) & e^{-i\beta}cos(\alpha)
+            \end{bmatrix}.
+
+    **Details:**
+
+    * Number of wires: 1
+    * Number of parameters: 4
+
+    Args:
+        alpha, beta, gamma, phi (float): gate (unitary) parameters
+        wires (Sequence[int] or int): the wire the operation acts on
+    """
+   
+    num_params = 4
+    num_wires = 1
+    par_domain = "R"
+    grad_method = "A"
+
+    @classmethod
+    def _matrix(cls, *params):
+        alpha, beta, gamma, phi = params[0], params[1], params[2], params[3]
+        c = math.cos(alpha)
+        s = math.sin(alpha)
+        e_ib = cmath.exp(1j*beta)
+        e_ig = cmath.exp(1j*alpha)
+        e_ip = cmath.exp(1j*phi)
+
+        return e_ip*np.array([[e_ib*c, e_ig*s], [-1/e_ig*s, 1/e_ib*c]])
+
+    def adjoint(self):
+        alpha, beta, gamma, phi = -params[0], -params[1], params[2], -params[3]
+        return GeneralGate(alpha, beta, gamma, phi, wires=self.wires)
+    
+    def _controlled(self, wire):
+        CGeneralGate(*self.parameters, wires=wire + self.wires)
+
+
+class CGeneralGate(Operation):
+    r""" CGeneralGate(alpha, beta, gamma, phi, wires)
+    Conrolled GeneralGate gate
+
+    .. math:: 
+
+    \begin{align}
+            CG(\alpha, \beta, \gamma, \phi) &=
+            \begin{bmatrix}
+            & 1 & 0 & 0 & 0 \\
+            & 0 & 1 & 0 & 0\\
+            & 0 & 0 & e^{\phi}e^{i\beta}cos(\alpha) & e^{\phi}e^{i\gamma}sin(\alpha)\\
+            & 0 & 0 & -e^{\phi}e^{-i\gamma}sin(\alpha) & e^{\phi}e^{-i\beta}cos(\alpha)
+            \end{bmatrix}.
+        \end{align}
+
+    **Details:**
+
+    * Number of wires: 1
+    * Number of parameters: 4
+
+    Args:
+        alpha, beta, gamma, phi (float): gate (unitary) parameters
+        wires (Sequence[int] or int): the wire the operation acts on
+    """
+   
+    num_params = 4
+    num_wires = 2
+    par_domain = "R"
+    grad_method = "A"
+
+    @classmethod
+    def _matrix(cls, *params):
+        alpha, beta, gamma, phi = params[0], params[1], params[2], params[3]
+        c = math.cos(alpha)
+        s = math.sin(alpha)
+        e_ib = cmath.exp(1j*beta)
+        e_ig = cmath.exp(1j*alpha)
+        e_ip = cmath.exp(1j*phi)
+
+        return np.array([[1, 0, 0, 0], [0, 1, 0, 0], [0, 0, e_ip*e_ib*c, e_ip*e_ig*s], [0, 0, -1/e_ig*e_ip*s, 1/e_ib*e_ip*c]])
+
+    def adjoint(self):
+        alpha, beta, gamma, phi = -params[0], -params[1], params[2], -params[3]
+        return CGeneralGate(alpha, beta, gamma, phi, wires=self.wires)
 
 class RX(Operation):
     r"""RX(phi, wires)

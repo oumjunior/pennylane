@@ -131,6 +131,8 @@ class DefaultQubitTF(DefaultQubit):
     parametric_ops = {
         "PhaseShift": tf_ops.PhaseShift,
         "ControlledPhaseShift": tf_ops.ControlledPhaseShift,
+        "GeneralGate": tf_ops.GeneralGate,
+        "CGeneralGate": tf_ops.CGeneralGate,
         "RX": tf_ops.RX,
         "RY": tf_ops.RY,
         "RZ": tf_ops.RZ,
@@ -145,7 +147,7 @@ class DefaultQubitTF(DefaultQubit):
         "SingleExcitationMinus": tf_ops.SingleExcitationMinus,
         "DoubleExcitation": tf_ops.DoubleExcitation,
         "DoubleExcitationPlus": tf_ops.DoubleExcitationPlus,
-        "DoubleExcitationMinus": tf_ops.DoubleExcitationMinus,
+        "DoubleExcitationMinus": tf_ops.DoubleExcitationMinus,   
     }
 
     C_DTYPE = tf.complex128

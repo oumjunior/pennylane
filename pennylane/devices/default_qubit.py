@@ -111,6 +111,8 @@ class DefaultQubit(QubitDevice):
         "CZ",
         "PhaseShift",
         "ControlledPhaseShift",
+        "GeneralGate",
+        "CGeneralGate",
         "RX",
         "RY",
         "RZ",

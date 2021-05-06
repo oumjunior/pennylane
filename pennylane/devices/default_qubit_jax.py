@@ -137,6 +137,8 @@ class DefaultQubitJax(DefaultQubit):
     parametric_ops = {
         "PhaseShift": jax_ops.PhaseShift,
         "ControlledPhaseShift": jax_ops.ControlledPhaseShift,
+        "GeneralGate": jax_ops.GeneralGate,
+        "CGeneralGate": jax_ops.CGeneralGate, 
         "RX": jax_ops.RX,
         "RY": jax_ops.RY,
         "RZ": jax_ops.RZ,
