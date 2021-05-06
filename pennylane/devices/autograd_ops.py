@@ -62,20 +62,20 @@ def ControlledPhaseShift(phi):
     return np.array([1.0, 1.0, 1.0, np.exp(1j * phi)])
 
 def GeneralGate(alpha, beta, gamma, phi):
-    c = math.cos(alpha)
-    s = math.sin(alpha)
-    e_ib = cmath.exp(1j*beta)
-    e_ig = cmath.exp(1j*alpha)
-    e_ip = cmath.exp(1j*phi)
+    c = np.cos(alpha)
+    s = np.sin(alpha)
+    e_ib = np.exp(1j*beta)
+    e_ig = np.exp(1j*alpha)
+    e_ip = np.exp(1j*phi)
 
     return e_ip*np.array([[e_ib*c, e_ig*s], [-1/e_ig*s, 1/e_ib*c]])
 
 def CGeneralGate(alpha, beta, gamma, phi):
-    c = math.cos(alpha)
-    s = math.sin(alpha)
-    e_ib = cmath.exp(1j*beta)
-    e_ig = cmath.exp(1j*alpha)
-    e_ip = cmath.exp(1j*phi)
+    c = np.cos(alpha)
+    s = np.sin(alpha)
+    e_ib = np.exp(1j*beta)
+    e_ig = np.exp(1j*alpha)
+    e_ip = np.exp(1j*phi)
 
     return np.array([[1, 0, 0, 0], [0, 1, 0, 0], [0, 0, e_ip*e_ib*c, e_ip*e_ig*s], [0, 0, -1/e_ig*e_ip*s, 1/e_ib*e_ip*c]])
 
