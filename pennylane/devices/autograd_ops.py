@@ -62,6 +62,14 @@ def ControlledPhaseShift(phi):
     return np.array([1.0, 1.0, 1.0, np.exp(1j * phi)])
 
 def GeneralGate(alpha, beta, gamma, phi):
+    r"""One-qubit fully parametrized gate.
+
+    Args:
+        alpha, beta, gamma, phi (float): parameters
+
+    Returns:
+        array[complex]: unitary 2x2 rotation matrix 
+    """
     c = np.cos(alpha)
     s = np.sin(alpha)
     e_ib = np.exp(1j*beta)
@@ -71,6 +79,14 @@ def GeneralGate(alpha, beta, gamma, phi):
     return e_ip*np.array([[e_ib*c, e_ig*s], [-1/e_ig*s, 1/e_ib*c]])
 
 def CGeneralGate(alpha, beta, gamma, phi):
+    r"""Controlled GeneralGate.
+
+    Args:
+        alpha, beta, gamma, phi (float): parameters
+
+    Returns:
+        array[complex]: unitary 4x4 rotation matrix 
+    """
     c = np.cos(alpha)
     s = np.sin(alpha)
     e_ib = np.exp(1j*beta)
