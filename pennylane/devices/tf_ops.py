@@ -64,6 +64,14 @@ def ControlledPhaseShift(phi):
     return tf.convert_to_tensor([1.0, 1.0, 1.0, tf.exp(1j * phi)])
 
 def GeneralGate(alpha, beta, gamma, phi):
+    r"""One-qubit fully parametrized gate.
+
+    Args:
+        alpha, beta, gamma, phi (float): parameters
+
+    Returns:
+        array[complex]: unitary 2x2 rotation matrix 
+    """
     c = tf.cos(alpha)
     s = tf.sin(alpha)
     e_ib = tf.exp(1j*beta)
@@ -73,6 +81,15 @@ def GeneralGate(alpha, beta, gamma, phi):
     return e_ip*tf.convert_to_tensor([[e_ib*c, e_ig*s], [-1/e_ig*s, 1/e_ib*c]])
 
 def CGeneralGate(alpha, beta, gamma, phi):
+    r"""Controlled GeneralGate.
+
+    Args:
+        alpha, beta, gamma, phi (float): parameters
+
+    Returns:
+        array[complex]: unitary 4x4 rotation matrix 
+    """
+    
     c = tf.cos(alpha)
     s = tf.sin(alpha)
     e_ib = tf.exp(1j*beta)
